@@ -28,6 +28,8 @@ export const TENCENT_BASE_URL = "https://hunyuan.tencentcloudapi.com";
 export const MOONSHOT_BASE_URL = "https://api.moonshot.cn";
 export const IFLYTEK_BASE_URL = "https://spark-api-open.xf-yun.com";
 
+export const XAI_BASE_URL = "https://api.x.ai";
+
 export const CACHE_URL_PREFIX = "/api/cache";
 export const UPLOAD_URL = `${CACHE_URL_PREFIX}/upload`;
 
@@ -59,6 +61,7 @@ export enum ApiPath {
   Iflytek = "/api/iflytek",
   Stability = "/api/stability",
   Artifacts = "/api/artifacts",
+  XAI = "/api/xai",
 }
 
 export enum SlotID {
@@ -111,6 +114,7 @@ export enum ServiceProvider {
   Moonshot = "Moonshot",
   Stability = "Stability",
   Iflytek = "Iflytek",
+  XAI = "XAI",
 }
 
 // Google API safety settings, see https://ai.google.dev/gemini-api/docs/safety-settings
@@ -133,6 +137,7 @@ export enum ModelProvider {
   Hunyuan = "Hunyuan",
   Moonshot = "Moonshot",
   Iflytek = "Iflytek",
+  XAI = "XAI",
 }
 
 export const Stability = {
@@ -215,6 +220,11 @@ export const Iflytek = {
   ChatPath: "v1/chat/completions",
 };
 
+export const XAI = {
+  ExampleEndpoint: XAI_BASE_URL,
+  ChatPath: "v1/chat/completions",
+};
+
 export const DEFAULT_INPUT_TEMPLATE = `{{input}}`; // input / time / model / lang
 // export const DEFAULT_SYSTEM_TEMPLATE = `
 // You are ChatGPT, a large language model trained by {{ServiceProvider}}.
@@ -290,6 +300,8 @@ const alibabaModes = ["alibaba-placeholder-model"];
 const tencentModels = ["tencent-placeholder-model"];
 const moonshotModes = ["moonshot-placeholder-model"];
 const iflytekModels = ["iflytek-placeholder-model"];
+
+const xAIModes = ["grok-beta"];
 
 let seq = 1000; // 内置的模型序号生成器从1000开始
 export const DEFAULT_MODELS = [
@@ -401,6 +413,17 @@ export const DEFAULT_MODELS = [
       providerName: "Iflytek",
       providerType: "iflytek",
       sorted: 10,
+    },
+  })),
+  ...xAIModes.map((name) => ({
+    name,
+    available: true,
+    sorted: seq++,
+    provider: {
+      id: "xai",
+      providerName: "XAI",
+      providerType: "xai",
+      sorted: 11,
     },
   })),
 ] as const;
